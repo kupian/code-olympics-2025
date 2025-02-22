@@ -1,5 +1,5 @@
 number = input().split(" ")
-
+#permsTest
 DIGITS = {
     "zero": 0,
     "one": 1,
