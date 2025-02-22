@@ -11,13 +11,22 @@ class Time:
         self.minute = int(m)
     
     def add_minutes(self, m):
-        self.hour += int(m/60)
-        m = m%60
-        self.minute += m
+        while m > 0:
+            self.minute += 1
+            m -= 1
+            if self.minute == 60:
+                self.hour += 1
+                self.minute = 0
         
-        if self.minute > 59:
-            self.hour += 1
-            self.minute -= 60
+        self.hour = self.hour%24
+        
+    def remove_minutes(self, m):
+        while m > 0:
+            self.minute -= 1
+            m -= 1
+            if self.minute == -1:
+                self.hour -= 1
+                self.minute = 59
         
         self.hour = self.hour%24
         
@@ -39,5 +48,9 @@ current_time = input().split(":")
 time = Time(current_time[0], current_time[1])
 minutes_to_move = int(input())
 
-time.add_minutes(minutes_to_move)
+if minutes_to_move > 0:
+    time.add_minutes(minutes_to_move)
+else:
+    time.remove_minutes(-minutes_to_move)
+
 print(time.time())
