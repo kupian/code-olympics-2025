@@ -1,11 +1,31 @@
-board=[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]
-currentScore = input()
-finishCount = 0
+current_score = int(input())
+singles = [s for s in range (1,21)] + [25]
+doubles = [2 * i for i in range(1, 21)] + [50]
+triples = [3 * i for i in range(1,21)]
 
-if currentScore > 170:
-    print(0)
-elif currentScore == 170:
-    print(1)
+def get_combinations(score, darts_thrown):
+    combinations = 0
+    
+    if darts_thrown == 3:
+        return combinations
+    
+    for single_throw in scores:
+        new_score = score - single_throw
+        if new_score >= 2:
+            combinations += get_combinations(new_score, darts_thrown+1)
+    
+    for double_throw in scores:
+        new_score = score - double_throw*2
+        if new_score == 0:
+            combinations += 1
+        elif new_score >= 2:
+            combinations += get_combinations(new_score, darts_thrown+1)
+            
+    for triple_throw in scores:
+        new_score = score - triple_throw*3
+        if new_score >= 2:
+            combinations += get_combinations(new_score, darts_thrown+1)
+    
+    return combinations
 
-
-
+print(get_combinations(current_score, 0))
